@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class Launcher : MonoBehaviour
 {
+    [Header("Inputs")]
     [SerializeField] int dragButton;
-    [SerializeField] GameObject anvilPrefab;
+    [Header("Settings")]
     [SerializeField] Transform launchPoint;
     [SerializeField] float launchSpin;
     [SerializeField] float launchPower;
     [SerializeField] float maxDrag;
+    [Header("Resources")]
+    [SerializeField] GameObject anvilPrefab;
 
     Collider2D triggerArea;
 
@@ -32,14 +35,14 @@ public class Launcher : MonoBehaviour
 
     private Vector3 CalculateLaunchVector()
     {
-        Vector3 offset = transform.position - Vision.GetMouseWorldPosition();
+        Vector3 offset = transform.position - Vision.instance.GetMouseWorldPosition();
         return offset.normalized * Mathf.Clamp(offset.magnitude, 0f, maxDrag);
     }
 
     void Update()
     {
         
-        if (Input.GetMouseButtonDown(dragButton) && triggerArea.OverlapPoint(Vision.GetMouseWorldPosition()))
+        if (Input.GetMouseButtonDown(dragButton) && triggerArea.OverlapPoint(Vision.instance.GetMouseWorldPosition()))
         {
             dragging = true;
         }

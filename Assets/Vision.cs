@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Vision : MonoBehaviour
 {
+    [Header("Inputs")]
     [SerializeField] int panButton;
 
     Transform trackedObject = null;
@@ -13,26 +14,46 @@ public class Vision : MonoBehaviour
     Vector3 panWorldAnchor = Vector3.zero;
     float screenToWorldScale = 1f;
 
-    private static Vision instance;
+    public static Vision instance { get; private set; }
 
     private void Awake()
     {
         instance = this; 
     }
 
-    public static void SetTrack(Transform transform)
+    /// <summary>
+    /// Set the camera to track an object
+    /// </summary>
+    /// <param name="transform"></param>
+    public void SetTrack(Transform transform)
     {
-        instance.trackedObject = transform;
+        trackedObject = transform;
     }
 
-    public static void StopTracking()
+    /// <summary>
+    /// Reset the tracking status of the camera
+    /// </summary>
+    public void StopTracking()
     {
-        instance.trackedObject = null;
+        trackedObject = null;
     }
 
-    public static Vector3 GetMouseWorldPosition()
+    /// <summary>
+    /// Calculates the world position of the cursor
+    /// </summary>
+    /// <returns>x, y</returns>
+    public Vector3 GetMouseWorldPosition()
     {
-        return instance.camera.ScreenToWorldPoint(Input.mousePosition);
+        return camera.ScreenToWorldPoint(Input.mousePosition);
+    }
+
+    /// <summary>
+    /// Calculates the size of the camera view in world units
+    /// </summary>
+    /// <returns>width, height</returns>
+    public Vector2 GetSize()
+    {
+        return new Vector2(instance.camera.orthographicSize * 2 * instance.camera.aspect, instance.camera.orthographicSize * 2);
     }
 
     void Start()
@@ -41,15 +62,21 @@ public class Vision : MonoBehaviour
         screenToWorldScale = (camera.ScreenToWorldPoint(Vector3.right) - camera.ScreenToWorldPoint(Vector3.zero)).magnitude;
     }
 
+    /// <summary>
+    /// Moves the camera to follow another object
+    /// </summary>
     private void Track()
     {
-        if (trackedObject == null) { return; }
 
     }
 
+    /// <summary>
+    /// Pan the camera in response to player holding down a mouse button and moving the cursor
+    /// </summary>
     private void Pan()
     {
-        if (trackedObject != null) { return;}
+        
+        //save an anchor when starts panning and sets the position based on cursor displacement relative to anchor
         if (Input.GetMouseButtonDown(panButton))
         {
             panWorldAnchor = transform.position;
@@ -68,7 +95,13 @@ public class Vision : MonoBehaviour
 
     void Update()
     {
-        Track();
-        Pan();
+        if (trackedObject != null)
+        {
+            Track();
+        }
+        else
+        {
+            Pan();
+        }
     }
 }
