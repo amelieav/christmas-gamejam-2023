@@ -23,7 +23,7 @@ public class VisionBinder : MonoBehaviour
     void LateUpdate()
     {
         Vector2 visionSize = vision.GetSize();
-        Vector2 visionPosition = vision.transform.position;
+        Vector3 visionPosition = vision.transform.position;
 
         //limit camera vision to with the 2d area defined by the collider
         float minX = transform.position.x + trigger.offset.x - trigger.size.x / 2f + visionSize.x / 2f;
