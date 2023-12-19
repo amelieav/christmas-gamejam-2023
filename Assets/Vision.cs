@@ -7,6 +7,9 @@ public class Vision : MonoBehaviour
     [Header("Inputs")]
     [SerializeField] int panButton;
 
+    [Header("Settings")]
+    [SerializeField] float trackSpeed;
+
     Transform trackedObject = null;
     new Camera camera;
 
@@ -67,7 +70,11 @@ public class Vision : MonoBehaviour
     /// </summary>
     private void Track()
     {
-
+        float z = transform.position.z;
+        Vector2 position = transform.position;
+        Vector2 target = trackedObject.transform.position;
+        position = Vector2.Lerp(position, target, Time.deltaTime * trackSpeed);
+        transform.position = new Vector3(position.x, position.y, z);
     }
 
     /// <summary>
@@ -81,6 +88,11 @@ public class Vision : MonoBehaviour
         {
             panWorldAnchor = transform.position;
             panMouseAnchor = Input.mousePosition;
+
+            if (trackedObject)
+            {
+                trackedObject = null;
+            }
         }
         else if (Input.GetMouseButton(panButton))
         {
@@ -95,13 +107,10 @@ public class Vision : MonoBehaviour
 
     void Update()
     {
+        Pan();
         if (trackedObject != null)
         {
             Track();
-        }
-        else
-        {
-            Pan();
         }
     }
 }

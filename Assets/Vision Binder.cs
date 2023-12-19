@@ -23,20 +23,20 @@ public class VisionBinder : MonoBehaviour
     void LateUpdate()
     {
         Vector2 visionSize = vision.GetSize();
-        Vector3 visionPosition = vision.transform.position;
+        Vector3 visionPosition = vision.transform.localPosition;
 
         //limit camera vision to with the 2d area defined by the collider
-        float minX = transform.position.x + trigger.offset.x - trigger.size.x / 2f + visionSize.x / 2f;
+        float minX = trigger.offset.x - trigger.size.x / 2f + visionSize.x / 2f;
         visionPosition.x = Mathf.Max(minX, visionPosition.x);
-        float maxX = transform.position.x + trigger.offset.x + trigger.size.x / 2f - visionSize.x / 2f;
+        float maxX = trigger.offset.x + trigger.size.x / 2f - visionSize.x / 2f;
         visionPosition.x = Mathf.Min(maxX, visionPosition.x);
 
-        float minY = transform.position.y + trigger.offset.y - trigger.size.y / 2f + visionSize.y / 2f;
+        float minY = trigger.offset.y - trigger.size.y / 2f + visionSize.y / 2f;
         visionPosition.y = Mathf.Max(minY, visionPosition.y);
-        float maxY = transform.position.y + trigger.offset.y + trigger.size.y / 2f - visionSize.y / 2f;
+        float maxY = trigger.offset.y + trigger.size.y / 2f - visionSize.y / 2f;
         visionPosition.y = Mathf.Min(maxY, visionPosition.y);
 
         //apply changes
-        vision.transform.position = visionPosition;
+        vision.transform.localPosition = visionPosition;
     }
 }

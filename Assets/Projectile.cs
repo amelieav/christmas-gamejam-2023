@@ -12,7 +12,13 @@ public class Projectile : MonoBehaviour
 
     void Start()
     {
+        Vision.instance.SetTrack(transform);
         lastPosition = transform.position;
+    }
+
+    private void OnDestroy()
+    {
+        Vision.instance.StopTracking();
     }
 
     void Update()

@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Destructable : MonoBehaviour
 {
-    public float maxDamage = 100f; // Maximum damage the block can take before being destroyed
+    [SerializeField] float maxDamage = 100f; // Maximum damage the block can take before being destroyed
+    [SerializeField] Sprite damagedSprite;
     private float currentDamage = 0f; // Current damage level of the block
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -22,6 +23,10 @@ public class Destructable : MonoBehaviour
         if (collision.gameObject.CompareTag("Projectile"))
         {
             TakeDamage(damage);
+        }
+        if (damage > maxDamage/2f)
+        {
+            GetComponent<SpriteRenderer>().sprite = damagedSprite;
         }
     }
 

@@ -11,11 +11,13 @@ public class Launcher : MonoBehaviour
     [SerializeField] float launchSpin;
     [SerializeField] float launchPower;
     [SerializeField] float maxDrag;
+    [SerializeField] float useCooldown;
     [Header("Resources")]
     [SerializeField] GameObject anvilPrefab;
 
     Collider2D triggerArea;
 
+    float nextUsable = 0f;
     bool dragging = false;
 
     void Start()
@@ -31,6 +33,8 @@ public class Launcher : MonoBehaviour
         if (physicsBody == null) { Destroy(spawnedProjectile);Debug.Log("Projectile missing rigidbody2D");return; }
         physicsBody.AddForce(launchForce, ForceMode2D.Impulse);
         physicsBody.angularVelocity = angularForce / physicsBody.mass;
+
+        nextUsable = Time.time + useCooldown;
     }
 
     private Vector3 CalculateLaunchVector()
@@ -39,10 +43,15 @@ public class Launcher : MonoBehaviour
         return offset.normalized * Mathf.Clamp(offset.magnitude, 0f, maxDrag);
     }
 
+    bool CanUse()
+    {
+        return triggerArea.OverlapPoint(Vision.instance.GetMouseWorldPosition()) && Time.time > nextUsable;
+    }
+
     void Update()
     {
         
-        if (Input.GetMouseButtonDown(dragButton) && triggerArea.OverlapPoint(Vision.instance.GetMouseWorldPosition()))
+        if (Input.GetMouseButtonDown(dragButton) && CanUse())
         {
             dragging = true;
         }
