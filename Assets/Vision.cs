@@ -9,8 +9,9 @@ public class Vision : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField] float trackSpeed;
+    [SerializeField] Transform home;
 
-    Transform trackedObject = null;
+    public Transform trackedObject { get; private set; }
     new Camera camera;
 
     Vector3 panMouseAnchor = Vector3.zero;
@@ -41,6 +42,11 @@ public class Vision : MonoBehaviour
         trackedObject = null;
     }
 
+    public void GoHome()
+    {
+        SetTrack(home);
+    }
+
     /// <summary>
     /// Calculates the world position of the cursor
     /// </summary>
@@ -63,6 +69,8 @@ public class Vision : MonoBehaviour
     {
         camera = GetComponent<Camera>();
         screenToWorldScale = (camera.ScreenToWorldPoint(Vector3.right) - camera.ScreenToWorldPoint(Vector3.zero)).magnitude;
+
+        GoHome();
     }
 
     /// <summary>

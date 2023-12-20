@@ -18,7 +18,10 @@ public class Projectile : MonoBehaviour
 
     private void OnDestroy()
     {
-        Vision.instance.StopTracking();
+        if (Vision.instance.trackedObject == transform)
+        {
+            Vision.instance.GoHome();
+        }
     }
 
     void Update()

@@ -6,6 +6,8 @@ public class Destructable : MonoBehaviour
 {
     [SerializeField] float maxDamage = 100f; // Maximum damage the block can take before being destroyed
     [SerializeField] Sprite damagedSprite;
+    [SerializeField] GameObject damagedEffect;
+    [SerializeField] GameObject destroyedEffect;
     private float currentDamage = 0f; // Current damage level of the block
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -24,7 +26,7 @@ public class Destructable : MonoBehaviour
         {
             TakeDamage(damage);
         }
-        if (damage > maxDamage/2f)
+        if (damage > maxDamage/3f)
         {
             GetComponent<SpriteRenderer>().sprite = damagedSprite;
         }
@@ -32,10 +34,16 @@ public class Destructable : MonoBehaviour
 
     void TakeDamage(float damage)
     {
+        //TODO
+        //Spawn impact effect
+
         currentDamage += damage;
         if (currentDamage >= maxDamage)
         {
             Destroy(gameObject); // Destroy the block if it exceeds the max damage
+            
+            //Spawn destroyed crumbs effect
+            Instantiate(destroyedEffect,transform.position,transform.rotation);
         }
     }
 }
