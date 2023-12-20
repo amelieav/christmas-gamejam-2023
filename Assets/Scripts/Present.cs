@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class Present : MonoBehaviour
 {
+    [SerializeField] string projectileTag;
+
     private bool isCollected = false;
+
     public GameObject CollectedPresentTextHolder; // Ensure this variable name matches your GameObject
 
     // the following function flashes up a message when the Player collects the present
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!isCollected && other.CompareTag("Player"))
+        if (!isCollected && other.CompareTag(projectileTag))
         {
             isCollected = true;
 
