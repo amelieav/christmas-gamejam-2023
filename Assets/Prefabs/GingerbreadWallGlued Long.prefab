@@ -22,7 +22,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5181109858246290116, guid: 9edf044edc5489a419ea09e82155613f, type: 3}
       propertyPath: m_Size.y
-      value: 4
+      value: 0.64
       objectReference: {fileID: 0}
     - target: {fileID: 5181109858246290116, guid: 9edf044edc5489a419ea09e82155613f, type: 3}
       propertyPath: m_DrawMode
