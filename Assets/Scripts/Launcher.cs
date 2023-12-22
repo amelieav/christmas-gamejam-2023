@@ -65,8 +65,8 @@ public class Launcher : MonoBehaviour
         else if (Input.GetMouseButton(dragButton) && dragging)
         {
             Debug.DrawRay(transform.position, CalculateLaunchVector(), Color.yellow);
-            hammer.localRotation = Quaternion.AngleAxis(CalculateLaunchVector().magnitude*-5f, Vector3.forward);
-            shadowHammer.localRotation = Quaternion.AngleAxis(previousLaunch.magnitude * -5f, Vector3.forward);
+            hammer.localRotation = Quaternion.AngleAxis(CalculateLaunchVector().magnitude*-10f, Vector3.forward);
+            shadowHammer.localRotation = Quaternion.AngleAxis(previousLaunch.magnitude * -10f, Vector3.forward);
         }
         else if (Input.GetMouseButtonUp(dragButton) && dragging)
         {
