@@ -9,9 +9,10 @@ public class BuildingEditor : Editor
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
+        Building building = (Building)target;
         if (GUILayout.Button("Connect all"))
         {
-            Building building = (Building)target;
+            
 
             foreach (AnchoredJoint2D joint in building.gameObject.GetComponentsInChildren(typeof(AnchoredJoint2D), true))
             {
@@ -64,7 +65,6 @@ public class BuildingEditor : Editor
         }
         else if (GUILayout.Button("Set Breakforce"))
         {
-            Building building = (Building)target;
             foreach (AnchoredJoint2D joint in building.gameObject.GetComponentsInChildren(typeof(AnchoredJoint2D), true))
             {
                 joint.enabled = true;
@@ -75,6 +75,27 @@ public class BuildingEditor : Editor
                     joint.breakForce = building.hingedStrength;
                 }
             }
+        }
+        else if (GUILayout.Button("Connect Lowest"))
+        {
+            AnchoredJoint2D lowest = null;
+            foreach (AnchoredJoint2D joint in building.gameObject.GetComponentsInChildren(typeof(AnchoredJoint2D), true))
+            {
+                if (joint.enabled)
+                {
+                    continue;
+                }
+                if (lowest == null)
+                {
+                    lowest = joint;
+                    continue;
+                }
+                if (joint.transform.TransformPoint(joint.anchor).y < lowest.transform.TransformPoint(lowest.anchor).y)
+                {
+                    lowest = joint;
+                }
+            }
+            lowest.enabled = true;
         }
     }
 }

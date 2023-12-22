@@ -14,7 +14,12 @@ public class Launcher : MonoBehaviour
     [SerializeField] float useCooldown;
     [Header("Resources")]
     [SerializeField] GameObject anvilPrefab;
+    [SerializeField] Transform hammer;
+    [SerializeField] Transform shadowHammer;
 
+
+    private Vector3 previousLaunch;
+    SpriteRenderer anvilVisual;
     Collider2D triggerArea;
 
     float nextUsable = 0f;
@@ -23,6 +28,7 @@ public class Launcher : MonoBehaviour
     void Start()
     {
         triggerArea = gameObject.GetComponent<Collider2D>();
+        anvilVisual = GetComponent<SpriteRenderer>();
     }
 
     public void Launch(Vector3 launchForce, float angularForce, GameObject projectile)
@@ -40,7 +46,7 @@ public class Launcher : MonoBehaviour
     private Vector3 CalculateLaunchVector()
     {
         Vector3 offset = transform.position - Vision.instance.GetMouseWorldPosition();
-        return offset.normalized * Mathf.Clamp(offset.magnitude, 0f, maxDrag);
+        return offset.normalized * Mathf.Clamp(offset.magnitude / maxDrag,0f,1f) * maxDrag;
     }
 
     bool CanUse()
@@ -50,7 +56,8 @@ public class Launcher : MonoBehaviour
 
     void Update()
     {
-        
+        anvilVisual.enabled = Time.time > nextUsable;
+        shadowHammer.gameObject.SetActive(dragging);
         if (Input.GetMouseButtonDown(dragButton) && CanUse())
         {
             dragging = true;
@@ -58,11 +65,14 @@ public class Launcher : MonoBehaviour
         else if (Input.GetMouseButton(dragButton) && dragging)
         {
             Debug.DrawRay(transform.position, CalculateLaunchVector(), Color.yellow);
+            hammer.localRotation = Quaternion.AngleAxis(CalculateLaunchVector().magnitude*-10f, Vector3.forward);
+            shadowHammer.localRotation = Quaternion.AngleAxis(previousLaunch.magnitude * -10f, Vector3.forward);
         }
         else if (Input.GetMouseButtonUp(dragButton) && dragging)
         {
             dragging = false;
             Vector3 launchForce = CalculateLaunchVector() * launchPower;
+            previousLaunch = CalculateLaunchVector();
             Launch(launchForce, launchSpin, anvilPrefab);
         }
     }

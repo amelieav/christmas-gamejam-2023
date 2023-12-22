@@ -5,15 +5,19 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     public float timeToDisappear = 2f; // Time in seconds before the projectile is destroyed
+    public float getBackHere = 50f;
     private float stationaryTimer = 0f; // Timer to track if the projectile hasn't moved
     private float groundContactTimer = 0f; // Timer to track contact with the ground
     private Vector3 lastPosition; // Last recorded position of the projectile
     private bool isContactingGround = false; // Flag to check if the projectile is contacting the ground
 
+    Rigidbody2D rigidbody;
+
     void Start()
     {
         Vision.instance.SetTrack(transform);
         lastPosition = transform.position;
+        rigidbody = GetComponent<Rigidbody2D>();
     }
 
     private void OnDestroy()
@@ -26,7 +30,7 @@ public class Projectile : MonoBehaviour
 
     void Update()
     {
-        if (transform.position == lastPosition)
+        if (rigidbody.velocity.magnitude < 0.1f)
         {
             stationaryTimer += Time.deltaTime;
         }
@@ -45,6 +49,14 @@ public class Projectile : MonoBehaviour
         if (stationaryTimer >= timeToDisappear || groundContactTimer >= timeToDisappear)
         {
             Destroy(gameObject);
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (transform.position.y > getBackHere)
+        {
+            rigidbody.AddForce(Vector3.down * transform.position.y);
         }
     }
 
