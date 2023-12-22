@@ -7,6 +7,10 @@ TagManager:
   - Projectile
   - Ground
   - Block
+  - Scene1
+  - Scene2
+  - Scene3
+  - Scene4
   layers:
   - Default
   - TransparentFX
