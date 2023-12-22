@@ -53,7 +53,9 @@ public class Vision : MonoBehaviour
     /// <returns>x, y</returns>
     public Vector3 GetMouseWorldPosition()
     {
-        return camera.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 position = camera.ScreenToWorldPoint(Input.mousePosition);
+        position.z = 0f;
+        return position;
     }
 
     /// <summary>
