@@ -46,7 +46,7 @@ public class Launcher : MonoBehaviour
     private Vector3 CalculateLaunchVector()
     {
         Vector3 offset = transform.position - Vision.instance.GetMouseWorldPosition();
-        return offset.normalized * offset.magnitude;
+        return offset.normalized * Mathf.Clamp(offset.magnitude / maxDrag,0f,1f) * maxDrag;
     }
 
     bool CanUse()
