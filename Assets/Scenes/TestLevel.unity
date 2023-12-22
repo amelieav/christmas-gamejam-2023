@@ -2745,7 +2745,7 @@ MonoBehaviour:
   dragButton: 0
   launchPoint: {fileID: 838446455}
   launchSpin: -200
-  launchPower: 30
+  launchPower: 15
   maxDrag: 4
   useCooldown: 1
   anvilPrefab: {fileID: 3825038181387489753, guid: 53de79293b87eb14eaee5e9e74f90f54, type: 3}

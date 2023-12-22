@@ -11,7 +11,7 @@ public class Parallax : MonoBehaviour
         
     }
     
-    void Update()
+    void LateUpdate()
     {
         Vector3 position = transform.position;
 
