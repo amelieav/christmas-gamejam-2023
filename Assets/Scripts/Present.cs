@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Present : MonoBehaviour
@@ -10,12 +8,15 @@ public class Present : MonoBehaviour
 
     public GameObject CollectedPresentTextHolder; // Ensure this variable name matches your GameObject
 
-    // the following function flashes up a message when the Player collects the present
-    private void OnTriggerEnter2D(Collider2D other)
+    // This function is called when a collision with a 2D collider occurs
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (!isCollected && other.CompareTag(projectileTag))
+        if (!isCollected && collision.collider.CompareTag(projectileTag))
         {
             isCollected = true;
+
+            // Call the static IncrementScore method on ScoreManager
+            ScoreManager.IncrementScore(5);
 
             // Access the TextMesh component within the CollectedPresentTextHolder
             TextMesh textMesh = CollectedPresentTextHolder.GetComponent<TextMesh>();
@@ -26,7 +27,7 @@ public class Present : MonoBehaviour
                 textMesh.gameObject.SetActive(true); // Enable the TextMesh GameObject
             }
 
-            gameObject.SetActive(false);
+            gameObject.SetActive(false); // Disable the present GameObject
         }
     }
 }

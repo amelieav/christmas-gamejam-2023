@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using static System.Net.Mime.MediaTypeNames;
+using TMPro;
 
 public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager instance;
-    public UnityEngine.UI.Text scoreText;
+    public TMP_Text scoreText;
+
     private int score = 0; // The current score
 
     void Awake()
@@ -22,9 +24,9 @@ public class ScoreManager : MonoBehaviour
         }
     }
 
-    public void IncrementScore(int amount)
+    public static void IncrementScore(int amount)
     {
-        score += amount;
-        scoreText.text = "Coal collected: " + score;
+        instance.score += amount;
+        instance.scoreText.text = "Coal collected: " + instance.score;
     }
 }
