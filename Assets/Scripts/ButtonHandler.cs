@@ -5,7 +5,7 @@ public class DetectClicks : MonoBehaviour
 {
     public string tagToHide = "Scene1";
 
-    private void OnMouseDown()
+    public void Pressed()
     {
         // Find the GameObject with the specified tag
         GameObject objectToHide = GameObject.FindGameObjectWithTag(tagToHide);
