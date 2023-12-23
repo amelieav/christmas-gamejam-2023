@@ -118,6 +118,7 @@ public class Launcher : MonoBehaviour
             Vector3 launchForce = CalculateLaunchVector() * launchPower;
             previousLaunch = CalculateLaunchVector();
             Launch(launchForce, launchSpin, anvilPrefab);
+            hammer.localRotation = Quaternion.AngleAxis(0, Vector3.forward);
         }
     }
 
