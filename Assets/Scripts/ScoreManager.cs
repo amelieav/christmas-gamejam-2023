@@ -27,6 +27,6 @@ public class ScoreManager : MonoBehaviour
     public static void IncrementScore(int amount)
     {
         instance.score += amount;
-        instance.scoreText.text = "Coal collected: " + instance.score;
+        instance.scoreText.text = instance.score.ToString();
     }
 }
