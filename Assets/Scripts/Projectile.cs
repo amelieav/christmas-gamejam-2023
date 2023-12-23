@@ -22,6 +22,8 @@ public class Projectile : MonoBehaviour
 
     private void OnDestroy()
     {
+        ScoreManager.instance.IncrementScore(1); // Increment the coal score by 1
+
         if (Vision.instance.trackedObject == transform)
         {
             Vision.instance.GoHome();
