@@ -3,12 +3,16 @@ using UnityEngine;
 public class Present : MonoBehaviour
 {
     [SerializeField] string projectileTag;
-
     private bool isCollected = false;
+    public GameObject CollectedPresentTextHolder;
+    private AudioSource audioSource;
 
-    public GameObject CollectedPresentTextHolder; // Ensure this variable name matches your GameObject
+    private void Start()
+    {
+        // Get the AudioSource component attached to this GameObject
+        audioSource = GetComponent<AudioSource>();
+    }
 
-    // This function is called when a collision with a 2D collider occurs
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (!isCollected && collision.collider.CompareTag(projectileTag))
@@ -18,16 +22,24 @@ public class Present : MonoBehaviour
             // Call the static IncrementScore method on ScoreManager
             ScoreManager.IncrementScore(5);
 
-            // Access the TextMesh component within the CollectedPresentTextHolder
-            TextMesh textMesh = CollectedPresentTextHolder.GetComponent<TextMesh>();
-
-            // Check if the TextMesh component exists before enabling/disabling it
-            if (textMesh != null)
+            if (audioSource != null)
             {
-                textMesh.gameObject.SetActive(true); // Enable the TextMesh GameObject
+                audioSource.Play();
             }
 
-            gameObject.SetActive(false); // Disable the present GameObject
+            // Move the present out of camera's view so the audio clip keeps playing
+            // (if u just deactivate the present then it stops the audio)
+            transform.position = new Vector3(transform.position.x, 3000, transform.position.z);
+
+            if (audioSource != null && audioSource.clip != null)
+            {
+                Invoke("DeactivateGameObject", audioSource.clip.length);
+            }
         }
+    }
+
+    private void DeactivateGameObject()
+    {
+        gameObject.SetActive(false);
     }
 }

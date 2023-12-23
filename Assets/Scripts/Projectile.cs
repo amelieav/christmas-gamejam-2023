@@ -10,14 +10,23 @@ public class Projectile : MonoBehaviour
     private float groundContactTimer = 0f; // Timer to track contact with the ground
     private Vector3 lastPosition; // Last recorded position of the projectile
     private bool isContactingGround = false; // Flag to check if the projectile is contacting the ground
+    private AudioSource audioSource;
 
     Rigidbody2D rigidbody;
 
     void Start()
     {
+
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource != null)
+        {
+            audioSource.Play(); // Play the audio clip
+        }
         Vision.instance.SetTrack(transform);
         lastPosition = transform.position;
         rigidbody = GetComponent<Rigidbody2D>();
+
+        
     }
 
     private void OnDestroy()
