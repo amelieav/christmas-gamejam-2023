@@ -11,6 +11,8 @@ TagManager:
   - Scene2
   - Scene3
   - Scene4
+  - instruction-1
+  - instruction-2
   layers:
   - Default
   - TransparentFX
