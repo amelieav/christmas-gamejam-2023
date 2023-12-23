@@ -10,17 +10,16 @@ public class Projectile : MonoBehaviour
     private float groundContactTimer = 0f; // Timer to track contact with the ground
     private Vector3 lastPosition; // Last recorded position of the projectile
     private bool isContactingGround = false; // Flag to check if the projectile is contacting the ground
-    private AudioSource audioSource;
+    [SerializeField] AudioSource woosh;
+    [SerializeField] AudioSource crash;
 
     Rigidbody2D rigidbody;
 
     void Start()
     {
-
-        audioSource = GetComponent<AudioSource>();
-        if (audioSource != null)
+        if (woosh != null)
         {
-            audioSource.Play(); // Play the audio clip
+            woosh.Play(); // Play the audio clip
         }
         Vision.instance.SetTrack(transform);
         lastPosition = transform.position;
@@ -73,6 +72,14 @@ public class Projectile : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
+        if (crash != null)
+        {
+            if (!crash.isPlaying)
+            {
+                crash.Play(); // Play the audio clip
+                crash.time = 0.25f;
+            }
+        }
         if (collision.gameObject.CompareTag("Ground"))
         {
             isContactingGround = true;

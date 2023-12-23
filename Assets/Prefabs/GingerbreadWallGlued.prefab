@@ -128,7 +128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f82cd6814acba5a4f90db983b5d15df5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxDamage: 30
+  maxDamage: 15
   damagedSprite: {fileID: 21300000, guid: 13cd2c867107d84449c48fcffb66b286, type: 3}
   damagedEffect: {fileID: 0}
   destroyedEffect: {fileID: 4152812856820239527, guid: 5a4f07bdffb039044989d962d8da1141, type: 3}

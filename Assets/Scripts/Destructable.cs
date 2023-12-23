@@ -18,7 +18,7 @@ public class Destructable : MonoBehaviour
         // Add an additional damage condition for falling from height
         if (collision.gameObject.CompareTag("Ground") && transform.position.y >= 3 * Mathf.Max(transform.localScale.x, transform.localScale.y))
         {
-            damage *= 2; // Increase damage if falling from a height
+            damage += maxDamage/2f; // Increase damage if falling from a height
         }
 
         // Apply damage if colliding with a projectile
