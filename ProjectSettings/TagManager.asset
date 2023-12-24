@@ -13,6 +13,7 @@ TagManager:
   - Scene4
   - instruction-1
   - instruction-2
+  - arrow
   layers:
   - Default
   - TransparentFX
