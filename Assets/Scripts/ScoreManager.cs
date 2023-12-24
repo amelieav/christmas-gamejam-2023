@@ -8,6 +8,7 @@ using TMPro;
 public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager instance;
+    public int winCoal;
     public GameObject endScreen;
     public TMP_Text scoreText;
 
@@ -25,11 +26,12 @@ public class ScoreManager : MonoBehaviour
         }
     }
 
-    public static void IncrementScore(int amount)
+    public static void IncrementScore(string name, int amount)
     {
+        Debug.Log($"{name} incremented score by {amount}");
         instance.score += amount;
         instance.scoreText.text = instance.score.ToString();
-        if (instance.score >= 100)
+        if (instance.score >= instance.winCoal)
         {
             instance.endScreen.SetActive(true);
             instance.enabled = false;

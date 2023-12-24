@@ -20,7 +20,7 @@ public class Present : MonoBehaviour
             isCollected = true;
 
             // Call the static IncrementScore method on ScoreManager
-            ScoreManager.IncrementScore(5);
+            ScoreManager.IncrementScore(gameObject.name,5);
 
             if (audioSource != null)
             {

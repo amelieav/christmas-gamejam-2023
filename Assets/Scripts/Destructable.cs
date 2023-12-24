@@ -41,7 +41,7 @@ public class Destructable : MonoBehaviour
         if (currentDamage >= maxDamage)
         {
             Destroy(gameObject); // Destroy the block if it exceeds the max damage
-            
+            ScoreManager.IncrementScore(gameObject.name, 2); // Increment the coal score by 2
             //Spawn destroyed crumbs effect
             Instantiate(destroyedEffect,transform.position,transform.rotation);
         }
